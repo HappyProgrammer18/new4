@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
-			Orientation
+			accelerometer
 		</title>
 		
 		<script>
@@ -50,13 +51,39 @@
 	</head>
 <body>
     <!--<div id="output"></div>-->
-    <div>
-        Use a mobile device to access this page. The ball moves depending on the device's pitch (beta).
-    </div>
+   <table>
+    <tr><td>X</td><td><p id="x"></p></td></tr>
+    <tr><td>Y</td><td><p id="y"></p></td></tr>
+    <tr><td>Z</td><td><p id="z"></p></td></tr>
+   </table>
     
     <canvas id="canvas_output" style="position:absolute;top:0px;left:0px;" width="1536" height="730"></canvas>
+<script>
+    function _(selector){
+return document.querySelector(selector);
+    }
+    var x= _("#x");
+    var y= _("#y");
+    var z= _("#z");
+     if (window.DeviceMotionEvent == undefined) {
+        //No accelerometer is present. Use buttons. 
+        alert("no accelerometer");
+    }
+    else {
+ 
+        window.addEventListener("devicemotion", accelerometerUpdate, true);
+    }
 
+    function accelerometerUpdate(){
+   var acc = event.accelerationIncludingGravity;
+   var aX = acc.x;
+   var aY = acc.y;
+   var aZ = acc.z;
+   x.innerText=aX.toFixed(2);
+   y.innerText=aY.toFixed(2);
+   z.innerText=aZ.toFixed(2);
+    }
+
+</script>
 </body>
 </html>
-
-
